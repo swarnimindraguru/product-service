@@ -1,5 +1,7 @@
 package com.example.fackstore_api.controllers;
 
+import com.example.fackstore_api.commons.AuthCommons;
+import com.example.fackstore_api.dtos.UserDto;
 import com.example.fackstore_api.exceptions.ProductNotFoundException;
 import com.example.fackstore_api.models.Product;
 import com.example.fackstore_api.service.ProductService;
@@ -15,17 +17,26 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
-    private final ProductService productService;
+    private ProductService productService;
+    private AuthCommons authCommons;
 
-    ProductController(@Qualifier("selfProductService") ProductService productService){
+    ProductController(@Qualifier("selfProductService") ProductService productService,AuthCommons authCommons){
         this.productService = productService;
+        this.authCommons = authCommons;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable("id") Long id) throws ProductNotFoundException {
-//        return productService.getProductById(id);
-        Product product = productService.getProductById(id);
+
+// commented this as we already added spring.security.oauth2.resourceserver.jwt.issuer-uri=https://localhost:8181 in application.prop
+        //Call UserService ValidateToken API to validate the token.
+//        UserDto userDto = authCommons.validateTocken(token);
         ResponseEntity<Product> responseEntity;
+//        if (userDto == null){
+//            responseEntity =new ResponseEntity<>(null,HttpStatus.FORBIDDEN);
+//            return responseEntity;
+//        }
+        Product product = productService.getProductById(id);
         responseEntity = new ResponseEntity<>(product,  HttpStatus.OK);
         return responseEntity;
     }
