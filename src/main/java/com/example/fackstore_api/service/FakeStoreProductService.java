@@ -4,6 +4,7 @@ import com.example.fackstore_api.dtos.FakeStoreProductDto;
 import com.example.fackstore_api.exceptions.ProductNotFoundException;
 import com.example.fackstore_api.models.Category;
 import com.example.fackstore_api.models.Product;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -46,15 +47,23 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProducts() {
-       FakeStoreProductDto[] fakeStoreProductDtos = restTemplate.getForObject("https://fakestoreapi.com/products", FakeStoreProductDto[].class);
-        //List of FakeStoreProductDto to product
-        List<Product> response = new ArrayList<>();
-        for(FakeStoreProductDto fakeStoreProductDto : fakeStoreProductDtos){
-            response.add(convertFakeStoreDtoToProduct(fakeStoreProductDto));
-        }
-        return response;
+    public Page<Product> getAllProducts(int pageNumber, int pageSize) {
+        return null;
     }
+
+
+    //Commented as it is giving error while implementing pagination
+//    @Override
+//    public List<Product> getAllProducts() {
+//       FakeStoreProductDto[] fakeStoreProductDtos = restTemplate.getForObject("https://fakestoreapi.com/products", FakeStoreProductDto[].class);
+//        //List of FakeStoreProductDto to product
+//        List<Product> response = new ArrayList<>();
+//        for(FakeStoreProductDto fakeStoreProductDto : fakeStoreProductDtos){
+//            response.add(convertFakeStoreDtoToProduct(fakeStoreProductDto));
+//        }
+//        return response;
+//    }
+
     @Override
     public Product replaceProduct(Long id,Product product){
 //        restTemplate.

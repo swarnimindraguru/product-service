@@ -6,6 +6,9 @@ import com.example.fackstore_api.models.Product;
 import com.example.fackstore_api.repositories.CategoryRepository;
 import com.example.fackstore_api.repositories.ProductRepository;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -34,8 +37,8 @@ public class SelfProductService implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        List<Product> products = productRepository.findAll();
+    public Page<Product> getAllProducts(int pageNumber, int pageSize) {
+        Page<Product> products = productRepository.findAll(PageRequest.of(pageNumber, pageSize,Sort.by("price").ascending()));
         return products;
     }
 
