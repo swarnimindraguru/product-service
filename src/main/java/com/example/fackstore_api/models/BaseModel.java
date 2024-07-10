@@ -9,13 +9,14 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 @Setter
 @Getter
 @MappedSuperclass
-public class BaseModel {
+public class BaseModel implements Serializable { //Serializable is used as while implementing Redis, data will flow over network
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //AUTO increment
     private Long id;
